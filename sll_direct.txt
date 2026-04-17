@@ -1,0 +1,6 @@
+DOMAIN-SUFFIX,dababa.host
+DOMAIN-SUFFIX,shenleihaha.top
+DOMAIN-SUFFIX,masuit.net
+DOMAIN-SUFFIX,synology.com
+DOMAIN-SUFFIX,maxthon.com
+DOMAIN-SUFFIX,samsung.com
