@@ -1,7 +1,8 @@
-DOMAIN-SUFFIX,dababa.host
-DOMAIN-SUFFIX,shenleihaha.top
-DOMAIN-SUFFIX,masuit.net
-DOMAIN-SUFFIX,synology.com
-DOMAIN-SUFFIX,maxthon.com
-DOMAIN-SUFFIX,configmaxthonxxx.com
-DOMAIN-SUFFIX,samsung.com
+payload:
+  - '+.la.dababa.host'
+  - '+.www.shenleihaha.top'
+  - '+.masuit.net'
+  - '+.www.synology.com'
+  - '+.www.maxthon.com'
+  - '+.www.onfigmaxthonxxx.com'
+  - '+.www.samsung.com'
