@@ -1,8 +1,2 @@
 payload:
-  - '+.dababa.host'
-  - '+.shenleihaha.top'
-  - '+.masuit.net'
-  - '+.synology.com'
-  - '+.maxthon.com'
-  - '+.onfigmaxthonxxx.com'
-  - '+.samsung.com'
+  - DOMAIN-SUFFIX,masuit.net
