@@ -1,0 +1,2 @@
+payload:
+  - DOMAIN-SUFFIX,masuit.net
