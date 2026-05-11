@@ -4,7 +4,7 @@
 DOMAIN,push.mxfast.com
 
 # 域名后缀匹配
-DOMAIN-SUFFIX,
+#DOMAIN-SUFFIX,
 
 # 域名关键字匹配
-DOMAIN-KEYWORD,
+#DOMAIN-KEYWORD,
