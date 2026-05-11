@@ -1,2 +1,7 @@
-payload:
-  - DOMAIN-SUFFIX,masuit.net
+# 直连补充列表
+
+# 域名后缀匹配
+DOMAIN-SUFFIX,masuit.net
+
+# 域名关键字匹配
+DOMAIN-KEYWORD,
