@@ -1,5 +1,8 @@
 # 直连补充列表
 
+# 完整域名匹配
+#DOMAIN,
+
 # 域名后缀匹配
 DOMAIN-SUFFIX,dababa.host
 DOMAIN-SUFFIX,shenleihaha.top
