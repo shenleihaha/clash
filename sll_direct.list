@@ -1,7 +1,7 @@
 # 直连补充列表
 
 # 完整域名匹配
-#DOMAIN,
+#DOMAIN,aae-sgsip001-18.asuscomm.com
 
 # 域名后缀匹配
 DOMAIN-SUFFIX,dababa.host
