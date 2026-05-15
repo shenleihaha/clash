@@ -12,6 +12,8 @@ DOMAIN,license.octanerender.com
 #Adobe
 DOMAIN-SUFFIX,otoy.com
 DOMAIN-SUFFIX,octanerender.com
+DOMAIN-SUFFIX,adobe.io
+DOMAIN-SUFFIX,adobestats.io
 
 # 域名关键字匹配
 #Adobe
