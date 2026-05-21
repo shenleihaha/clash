@@ -10,6 +10,9 @@ DOMAIN-SUFFIX,masuit.net
 DOMAIN-SUFFIX,synology.com
 DOMAIN-SUFFIX,maxthon.com
 DOMAIN-SUFFIX,samsung.com
+#公司
+DOMAIN-SUFFIX,dan-marine.com
+DOMAIN-SUFFIX,dma-marine.com
 
 # 域名关键字匹配
 #DOMAIN-KEYWORD,
