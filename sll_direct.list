@@ -1,15 +1,17 @@
 # 直连补充列表
 
 # 完整域名匹配
-#DOMAIN,aae-sgsip001-18.asuscomm.com
+DOMAIN,aae-sgsip001-18.asuscomm.com
 
 # 域名后缀匹配
+#自用
 DOMAIN-SUFFIX,dababa.host
 DOMAIN-SUFFIX,shenleihaha.top
 DOMAIN-SUFFIX,masuit.net
 DOMAIN-SUFFIX,synology.com
-DOMAIN-SUFFIX,maxthon.com
 DOMAIN-SUFFIX,samsung.com
+DOMAIN-SUFFIX,maxthon.com
+DOMAIN-SUFFIX,mxfast.com
 #公司
 DOMAIN-SUFFIX,dan-marine.com
 DOMAIN-SUFFIX,dma-marine.com
