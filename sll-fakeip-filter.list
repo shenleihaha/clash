@@ -4,10 +4,15 @@
 #DOMAIN,
 
 # 域名后缀匹配
-#自用
+#Sony PlayStation
+DOMAIN-SUFFIX,stun.playstation.net
+DOMAIN-SUFFIX,playstation.net
+DOMAIN-SUFFIX,playstation.com
+#Todesk
+DOMAIN-SUFFIX,todesk.com
+#域名
 DOMAIN-SUFFIX,dababa.host
 DOMAIN-SUFFIX,shenleihaha.top
-
 #公司
 DOMAIN-SUFFIX,dan-marine.com
 DOMAIN-SUFFIX,dma-marine.com
