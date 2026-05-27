@@ -2,6 +2,8 @@
 
 # 完整域名匹配
 DOMAIN,aae-sgsip001-18.asuscomm.com
+DOMAIN,clash.razord.top
+DOMAIN,yacd.haishan.me
 
 # 域名后缀匹配
 #自用
