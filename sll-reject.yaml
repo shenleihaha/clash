@@ -1,0 +1,22 @@
+# 拒绝补充列表
+
+# 完整域名匹配
+DOMAIN,push.mxfast.com
+#Adobe
+DOMAIN,license.otoy.com
+DOMAIN,auth.otoy.com
+DOMAIN,api.otoy.com
+DOMAIN,license.octanerender.com
+
+# 域名后缀匹配
+#Adobe
+DOMAIN-SUFFIX,otoy.com
+DOMAIN-SUFFIX,octanerender.com
+DOMAIN-SUFFIX,adobe.io
+DOMAIN-SUFFIX,adobestats.io
+
+# 域名关键字匹配
+#Adobe
+DOMAIN-KEYWORD,otoy
+DOMAIN-KEYWORD,octane
+DOMAIN-KEYWORD,octanerender
