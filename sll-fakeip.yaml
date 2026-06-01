@@ -2,9 +2,12 @@ payload:
   - '+.stun.playstation.net'
   - '+.playstation.net'
   - '+.playstation.com'
+  - '+.sony.com'
+  - '+.update.playstation.net'
+  - '+.psn.net'
+  - '+.sonyentertainmentnetwork.com'
   - '+.todesk.com'
   - '+.dababa.host'
   - '+.shenleihaha.top'
   - '+.dan-marine.com'
   - '+.dma-marine.com'
-
