@@ -1,0 +1,194 @@
+# 必读！！！
+# mihomo当前版本理论上较完美的分流准确同时防泄露专业版本（nikki，openclash等官方内核的都可以跑），如果用不明白，建议使用config.yaml
+# 因为DNS流程较多，尽可能用本地搭建DNS开启乐观缓存。
+# 因为配置里开启了绕过大陆，google商店会无法更新，可以尝试把 "+.googleapis.cn"  "+.xn--ngstr-lra8j.com" 两个域名后缀指定走国外DNS，同时rules里添加走代理，理论上可以解决，或者关闭绕过大陆。
+
+mixed-port: 7890
+authentication:
+- "user:passwd"
+skip-auth-prefixes:
+- 127.0.0.0/8
+- 192.168.0.0/16
+allow-lan: true
+bind-address: "*"
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+log-level: info
+keep-alive-idle: 600
+keep-alive-interval: 15
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+external-controller: 0.0.0.0:9090
+secret: ""
+external-ui: ui
+external-ui-name: zashboard
+external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+
+geox-url:
+  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+
+ntp:
+  enable: true
+  write-to-system: true
+
+tun:
+  enable: true
+  stack: mixed   ##如果内核版本大于v1.19.31，此处可以改为自研协议栈 mips ，理论上性能更好。
+  dns-hijack: ["any:53", "tcp://any:53"]
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+  route-exclude-address-set:
+    - cn_ip
+
+sniffer:
+  enable: true
+  override-destination: false
+  force-dns-mapping: false
+  parse-pure-ip: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
+
+dns:
+  enable: true
+  cache-algorithm: arc
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-ttl: 1
+  fake-ip-range: 198.18.0.0/16
+  fake-ip-filter-mode: blacklist
+  default-nameserver:
+    - https://223.5.5.5/dns-query
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  direct-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  nameserver-policy:
+    "rule-set:cn_domain,private_domain,fakeipfilter_cn,steamcn_domain,microsoftcn_domain,applecn_domain,sll-direct":
+    - https://dns.alidns.com/dns-query#disable-qtype-65=true
+    - https://doh.pub/dns-query#disable-qtype-65=true
+    "rule-set:fakeipfilter_!cn":
+    - https://8.8.8.8/dns-query#默认代理&disable-qtype-65=true
+  nameserver:
+    - https://8.8.8.8/dns-query#默认代理&ecs=223.5.5.0/24
+  fallback:
+    - https://8.8.8.8/dns-query#默认代理
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+  fake-ip-filter:
+    - rule-set:fakeipfilter_cn
+    - rule-set:fakeipfilter_!cn
+    - rule-set:private_domain
+    - rule-set:cn_domain
+    - rule-set:microsoftcn_domain
+    - rule-set:applecn_domain
+    - rule-set:steamcn_domain
+  # PlayStation
+    - "+.playstation.net"
+    - "+.playstation.com"
+    - "+.playstation.org"
+    - "+.sonyentertainmentnetwork.com"
+  # Xbox
+    - "+.xboxlive.com"
+    - "+.xbox.com"
+    - "+.gamepass.com"
+  # Nintendo
+    - "+.nintendo.net"
+    - "+.n.n.srv.nintendo.net"
+  # 自定义域名
+    - "+.dababa.host"
+
+
+# 出站策略，根据自己情况调整每个策略里分组排序，增删都可以，比如把美国自动放到第一个，比如删除香港故转，注意别漏掉表情逗号等。
+# 如果相应分组没有筛选到对应的国家，请根据自己节点名字调整筛选关键字。
+# 没有再使用锚点，是考虑很多新手修改难度，这样新手修改某个分组更容易些。
+
+proxy-groups:
+  - {name: ✈ 默认代理, type: select, health-check: [enable: true, url: "http://www.gstatic.com/generate_204", interval: 300, lazy: false], proxies: [🔁 按延迟自动选择, 🇺🇸 S1_SS_美国_CN2_GT, 🇺🇸 S2_Vless_美国_CN2_GT, 🇺🇸 S3_Vless_美国_CN2_GIA, 🇯🇵 S4_Vless_日本_POP, 🇳🇱 S5_Vless_荷兰_POP_CN2_GIA, 📥 1/10流量_下载专线]}
+  - {name: 🪟 微软, type: select, proxies:  [✈ 默认代理, 🇺🇸 S1_SS_美国_CN2_GT, 🇺🇸 S2_Vless_美国_CN2_GT, 🇺🇸 S3_Vless_美国_CN2_GIA, 🇯🇵 S4_Vless_日本_POP, 🇳🇱 S5_Vless_荷兰_POP_CN2_GIA, DIRECT]}
+  - {name: 🐟 漏网之鱼, type: select, proxies: [✈ 默认代理, 🇺🇸 S1_SS_美国_CN2_GT, 🇺🇸 S2_Vless_美国_CN2_GT, 🇺🇸 S3_Vless_美国_CN2_GIA, 🇯🇵 S4_Vless_日本_POP, 🇳🇱 S5_Vless_荷兰_POP_CN2_GIA, DIRECT]}
+  - {name: 🔁 按延迟自动选择, type: url-test, url: "http://www.gstatic.com/generate_204", include-all: true, tolerance: 50, interval: 300, filter: "^((?!(DIRECT|下载专线)).)*$"}
+  
+rules:
+  - AND,((RULE-SET,cn!_domain),(DST-PORT,443),(NETWORK,UDP)),REJECT
+  - RULE-SET,sll-direct,DIRECT
+  - RULE-SET,private_ip,DIRECT,no-resolve
+  - RULE-SET,private_domain,DIRECT
+  - RULE-SET,ai_domain,✈ 默认代理
+  - RULE-SET,youtube_domain,✈ 默认代理
+  - RULE-SET,google_domain,✈ 默认代理
+  - RULE-SET,github_domain,✈ 默认代理
+  - RULE-SET,onedrive_domain,🪟 微软
+  - RULE-SET,microsoftcn_domain,DIRECT
+  - RULE-SET,microsoft_domain,🪟 微软
+  - RULE-SET,applecn_domain,DIRECT
+  - RULE-SET,apple_domain,✈ 默认代理
+  - RULE-SET,telegram_domain,✈ 默认代理
+  - RULE-SET,tiktok_domain,✈ 默认代理
+  - RULE-SET,netflix_domain,✈ 默认代理
+  - RULE-SET,paypal_domain,✈ 默认代理
+  - RULE-SET,binance_domain,✈ 默认代理
+  - RULE-SET,okx_domain,✈ 默认代理
+  - RULE-SET,usd_domain,✈ 默认代理
+  - RULE-SET,steamcn_domain,DIRECT
+  - RULE-SET,steam_domain,✈ 默认代理
+  - RULE-SET,cn!_domain,✈ 默认代理
+  - RULE-SET,google_ip,✈ 默认代理
+  - RULE-SET,apple_ip,✈ 默认代理
+  - RULE-SET,telegram_ip,✈ 默认代理
+  - RULE-SET,netflix_ip,✈ 默认代理
+  - RULE-SET,cn_ip,DIRECT
+  - MATCH,🐟 漏网之鱼
+
+rule-anchor:
+  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+  domain_text: &domain_text {type: http, interval: 86400, behavior: domain, format: text}
+  class: &class {type: http, interval: 43200, behavior: classical, format: text}
+  
+rule-providers:
+  sll-direct: { <<: *class, url: "https://raw.githubusercontent.com/shenleihaha/clash/refs/heads/master/sll-direct.list"} 
+  fakeipfilter_cn: {<<: *domain_text, url: "https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/fakeipfilter-cn.list"}
+  fakeipfilter_!cn: {<<: *domain_text, url: "https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/fakeipfilter-!cn.list"}
+  private_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/private.mrs"}
+  ai_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-!cn.mrs"}
+  youtube_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/youtube.mrs"}
+  google_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google.mrs"}
+  github_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/github.mrs"}
+  onedrive_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/onedrive.mrs"}
+  microsoftcn_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/microsoft@cn.mrs"}
+  microsoft_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/microsoft.mrs"}
+  applecn_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple@cn.mrs"}
+  apple_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple.mrs"}
+  telegram_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/telegram.mrs"}
+  tiktok_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/tiktok.mrs"}
+  netflix_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/netflix.mrs"}
+  paypal_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/paypal.mrs"}
+  binance_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/binance.mrs"}
+  okx_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/okx.mrs"}
+  usd_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-cryptocurrency.mrs"}
+  steamcn_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam@cn.mrs"}
+  steam_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam.mrs"}
+  cn!_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-!cn.mrs"}
+  cn_domain: {<<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cn.mrs"}
+
+  google_ip: {<<: *ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs"}
+  apple_ip: {<<: *ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo-lite/geoip/apple.mrs"}
+  telegram_ip: {<<: *ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/telegram.mrs"}
+  netflix_ip: {<<: *ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/netflix.mrs"}
+  cn_ip: {<<: *ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cn.mrs"}
+  private_ip: {<<: *ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/private.mrs"}
